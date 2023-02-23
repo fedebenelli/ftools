@@ -1,12 +1,12 @@
 name = "ftools"
-version = "0.0.1"
+version = "0.0.2"
 license = "BSD"
 author = "Federico E. Benelli"
 maintainer = "federico.benelli@mi.unc.edu.ar"
-copyright = "Copyright 2022, Jane Doe"
+copyright = "Copyright 2023, Federico E. Benelli"
 [build]
-auto-executables = false
-auto-tests = false
-auto-examples = false
+auto-executables = true
+auto-tests = true
+auto-examples = true
 [install]
-library = true
+library = false
