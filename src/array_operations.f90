@@ -1,6 +1,6 @@
 module array_operations
    !! General array operations
-   use constants
+   use ftools_constants, only: pr
    implicit none
 
 contains
@@ -25,9 +25,41 @@ contains
       array = tmp_array
    end subroutine append_2d
 
+   pure function get_point_index(x, y, x_point, y_point)
+      !! Given two sets of points of the same dimension (x and y values)
+      !! get the index of the first closest number based on the maximum
+      !! difference between two consecutives points
+      !!
+      !! @note This could be improved to ask which point (first, second, etc)
+      !! to get.
+      real(pr), intent(in) :: x(:) !! x values
+      real(pr), intent(in) :: y(size(x)) !! y values
+      real(pr), intent(in) :: x_point !! Desired point x value
+      real(pr), intent(in) :: y_point !! Desired point y value
+      integer :: get_point_index !! Index of the first closest point
+
+      real(pr) :: delta_x(size(x)-1), delta_y(size(y)-1)
+
+      integer :: i
+
+      delta_x = maxval(abs(diff(x)))
+      delta_y = maxval(abs(diff(y)))
+
+      do i=lbound(x, dim=1), ubound(x, dim=1) - 1
+         if (abs(x(i) - x_point) < delta_x(i) .and. abs(y(i) - y_point) < delta_y(i)) then
+            get_point_index=i
+            exit
+         end if
+      end do
+   end function
+
    pure function diff(array)
-      real(pr), intent(in) :: array(:)
-      real(pr) :: diff(size(array))
+      !! Obtain the delta values of an array by doing:
+      !!
+      !! \[ diff_i = array_i - array_{i-1} \]
+      !!
+      real(pr), intent(in) :: array(:) !! Array to diff
+      real(pr) :: diff(size(array)) !! Diff
 
       integer :: n
       n = size(array)
@@ -36,10 +68,21 @@ contains
    end function
 
    pure function mask(bool_array)
-      ! Receives a boolean array and returns an array with the index numbers
-      ! where they're true
-      logical, intent(in) :: bool_array(:)
-      integer, allocatable :: mask(:)
+      !! Receives a boolean array and returns an array with the index numbers
+      !! where they're true. This can be used to mask an array based on an
+      !! filter
+      !! 
+      !! @note The boolean array could be an inline expression like
+      !! ```fortran
+      !! x = [1, 4, 6, 11, 2, 15]
+      !! mask(x < 10)
+      !! ```
+      !!
+      !! ```
+      !! >> [4, 6]
+      !! ```
+      logical, intent(in) :: bool_array(:) !! Array of booleans
+      integer, allocatable :: mask(:) !! Output array of indexes
 
       integer :: i
 
@@ -49,7 +92,6 @@ contains
              mask = [mask, i]
          end if
       end do
-
    end function
 
 end module array_operations

@@ -18,6 +18,6 @@ contains
       type is (integer)
          write (str_mid, *) int_in
       end select
-      str_out = adjustl(trim(str_mid))
+      str_out = trim(adjustl(str_mid))
    end function
 end module io

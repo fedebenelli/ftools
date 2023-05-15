@@ -1,3 +1,6 @@
+module ftools_constants
+  integer, parameter :: pr=8
+end module
 !> Hyperdual number definition & type declaration
 !!
 !! Original code provided by Philipp Rehner and Gernot Bauer,
@@ -80,7 +83,7 @@
 !!       Frontiers in Chemical Engineering_ (2021) \n
 !!
 module hyperdual_mod
-  use constants, only: pr
+  use ftools_constants, only: pr
   implicit none
 
   !> Derived type for hyperdual numbers
@@ -92,9 +95,9 @@ module hyperdual_mod
   type hyperdual
     sequence
     real(pr) :: f0 = 0  !< real part of the hyperdual number
-    real(pr) :: f1 = 0  !< \f$\varepsilon_1\f$-part of  the hyperdual number
-    real(pr) :: f2 = 0  !< \f$\varepsilon_2\f$-part of  the hyperdual number
-    real(pr) :: f12 = 0 !< \f$\varepsilon_1\varepsilon_2\f$-part of the
+    real(pr) :: f1 !< \f$\varepsilon_1\f$-part of  the hyperdual number
+    real(pr) :: f2 !< \f$\varepsilon_2\f$-part of  the hyperdual number
+    real(pr) :: f12 !< \f$\varepsilon_1\varepsilon_2\f$-part of the
   end type hyperdual
 
   !---------------------------------------------------------------------
@@ -1165,8 +1168,10 @@ module hyperdual_mod
       type (hyperdual)             :: v3
       real(pr)                     :: a, b, c, d
 
-      a = v1%f0; b = v1%f1
-      c = v2%f0; d = v2%f1
+      a = v1%f0
+      b = v1%f1
+      c = v2%f0
+      d = v2%f1
 
       v3%f0 = atan2(a,c)
       v3%f1 = (c*b - a*d)/(a*a + c*c)
