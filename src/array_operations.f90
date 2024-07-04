@@ -1,6 +1,6 @@
 module array_operations
    !! General array operations
-   use ftools_constants, only: pr
+   use ftools__constants, only: pr
    implicit none
 
 contains
@@ -93,5 +93,4 @@ contains
          end if
       end do
    end function
-
 end module array_operations

@@ -1,10 +1,9 @@
-module io
-   !! I/O related procedures
+module ftools__io
    implicit none
 
    interface str
       module procedure :: str_gen
-   end interface
+   end interface str
 
 contains
    function str_gen(int_in) result(str_out)
@@ -13,11 +12,11 @@ contains
       character(len=:), allocatable :: str_out
 
       select type(int_in)
-      type is (real)
+       type is (real)
          write (str_mid, *) int_in
-      type is (integer)
+       type is (integer)
          write (str_mid, *) int_in
       end select
       str_out = trim(adjustl(str_mid))
-   end function
-end module io
+   end function str_gen
+end module ftools__io

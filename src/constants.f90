@@ -1,4 +1,4 @@
-module ftools_constants
+module ftools__constants
    use iso_fortran_env, only: real64
    implicit none
 
