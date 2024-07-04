@@ -8,7 +8,7 @@ Mask an array based on a boolean expresion.
 
 ```fortran
 x = [1, 5, 2, 1, 6]
-y = mask(x < 3)
+y = x(mask(x < 3))
 
 print *, y
 ! [1, 2, 1]

@@ -1,4 +1,4 @@
-module array_operations
+module ftools__array_operations
    !! General array operations
    use ftools__constants, only: pr
    implicit none
@@ -51,7 +51,7 @@ contains
             exit
          end if
       end do
-   end function
+   end function get_point_index
 
    pure function diff(array)
       !! Obtain the delta values of an array by doing:
@@ -65,13 +65,13 @@ contains
       n = size(array)
 
       diff(2:n) = array(2:n) - array(1:n-1)
-   end function
+   end function diff
 
    pure function mask(bool_array)
       !! Receives a boolean array and returns an array with the index numbers
       !! where they're true. This can be used to mask an array based on an
       !! filter
-      !! 
+      !!
       !! @note The boolean array could be an inline expression like
       !! ```fortran
       !! x = [1, 4, 6, 11, 2, 15]
@@ -89,8 +89,8 @@ contains
       allocate(mask(0))
       do i = 1,size(bool_array)
          if (bool_array(i)) then
-             mask = [mask, i]
+            mask = [mask, i]
          end if
       end do
-   end function
-end module array_operations
+   end function mask
+end module ftools__array_operations
