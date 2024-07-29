@@ -67,6 +67,28 @@ contains
       diff(2:n) = array(2:n) - array(1:n-1)
    end function diff
 
+   subroutine sort(array, sorted_index)
+      real(pr), intent(in out) :: array(:)
+      integer, optional, intent(out) :: sorted_index(:)
+
+      integer :: i
+      logical :: sorted
+      sorted_index = [(i, i=lbound(array,dim=1),ubound(array,dim=1))]
+
+
+      do
+         sorted = .true.
+         do i=lbound(array, dim=1), ubound(array, dim=1)-1
+            if (array(i+1) < array(i)) then
+               sorted = .false.
+               array(i:i+1) = array(i+1:i:-1)
+               if(present(sorted_index)) sorted_index(i:i+1) = sorted_index(i+1:i:-1)
+            end if
+         end do
+         if (sorted) exit
+      end do
+   end subroutine
+
    pure function mask(bool_array)
       !! Receives a boolean array and returns an array with the index numbers
       !! where they're true. This can be used to mask an array based on an

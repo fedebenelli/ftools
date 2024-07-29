@@ -4,6 +4,7 @@ contains
 
     subroutine run_tests
         call test_mask
+        call test_sort
     end subroutine
 
     subroutine test_mask
@@ -14,6 +15,18 @@ contains
         x = [2, 5, 1, 6, 3]
         y = x(mask(x < 4))
         if (maxval(abs(y - [2, 1, 3])) > 1e-10) error stop
+    end subroutine
+
+    subroutine test_sort
+        use ftools__array_operations, only: sort
+        real(pr) :: x(5)
+        integer :: idx(5)
+        
+        x = [2, 5, 1, 6, 3]
+        call sort(x, idx)
+        print *, x
+        print *, idx
+
     end subroutine
 end module
 
@@ -45,6 +58,6 @@ program main
     use test_optionals, only: opt => run_tests
     implicit none
 
-    call aop
     call opt
+    call aop
 end program
